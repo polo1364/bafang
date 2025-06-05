@@ -68,47 +68,38 @@
       font-size: 18px;
       margin-top: 40px;
       line-height: 1.6;
-      display: none;
     }
     @media print {
-  body {
-    background: white;
-  }
-
-  /* 隱藏所有元素 */
-  body * {
-    visibility: hidden;
-  }
-
-  /* 顯示統計表與內部元素 */
-  #orderTable, #orderTable * {
-    visibility: visible;
-  }
-
-  /* 顯示 footer 與內部元素 */
-  .footer, .footer * {
-    visibility: visible;
-  }
-
-  /* 移除刪除按鈕 */
-  #orderTable button {
-    display: none !important;
-  }
-
-  /* 排版 footer 在頁面下方 */
-  .footer {
-    position: fixed;
-    bottom: 40px;
-    left: 0;
-    width: 100%;
-    text-align: center;
-  }
-}
+      body {
+        background: white;
+      }
+      body * {
+        visibility: hidden;
+      }
+      #orderTable, #orderTable * {
+        visibility: visible;
+      }
+      .footer, .footer * {
+        visibility: visible;
+      }
+      #orderTable button {
+        display: none !important;
+      }
+      .footer {
+        position: fixed;
+        bottom: 40px;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        background: white;
+      }
+    }
   </style>
 </head>
 <body>
   <div class="section">
     <h2>八方雲集點餐系統</h2>
+
     <label for="itemSelect">選擇品項：</label>
     <select id="itemSelect">
       <option value="">請選擇</option>
@@ -121,12 +112,12 @@
     <button onclick="clearOrders()">清除所有訂單</button>
 
     <div id="orderTable"></div>
-  </div>
 
-  <div class="footer">
-    <div>大瑞科技</div>
-    <div>地址: 高雄市大寮區鳳林二路532號</div>
-    <div>電話: (07)7871875</div>
+    <div class="footer">
+      <div>大瑞科技</div>
+      <div>地址: 高雄市大寮區鳳林二路532號</div>
+      <div>電話: (07)7871875</div>
+    </div>
   </div>
 
   <script>
@@ -167,7 +158,6 @@
       const item = document.getElementById("itemSelect").value;
       const qty = parseInt(document.getElementById("itemQty").value);
       if (!item || qty <= 0 || isNaN(qty)) return;
-
       if (!orders[item]) orders[item] = [];
       orders[item].push(qty);
       renderTable();
