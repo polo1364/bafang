@@ -71,26 +71,23 @@
       display: none;
     }
     @media print {
-      body * {
-        visibility: hidden;
-      }
-      #orderTable, #orderTable * {
-        visibility: visible;
-      }
-      #orderTable {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-      }
-      .footer {
-        visibility: visible;
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-      }
-    }
+  body * {
+    visibility: hidden;
+  }
+  #orderTable, #orderTable * {
+    visibility: visible;
+  }
+  #orderTable button {
+    display: none !important;
+  }
+  .footer {
+    visibility: visible;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+  }
+}
   </style>
 </head>
 <body>
