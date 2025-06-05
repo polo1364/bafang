@@ -68,20 +68,15 @@
       display: none;
     }
     @media print {
-  body {
-    background: white;
-  }
-  .section *:not(#orderTable):not(.footer) {
-    display: none !important;
-  }
-  #orderTable,
-  .footer {
-    display: block !important;
-  }
-}
+      body {
+        background: white;
+      }
+      .section *:not(#orderTable):not(.footer) {
+        display: none !important;
+      }
+      #orderTable,
       .footer {
-        display: block;
-        margin-top: 20px;
+        display: block !important;
       }
     }
   </style>
@@ -167,37 +162,37 @@
     }
 
     function renderTable() {
-  if (Object.keys(orders).length === 0) {
-    document.getElementById("orderTable").innerHTML = "<p>尚無訂單。</p>";
-    return;
-  }
+      if (Object.keys(orders).length === 0) {
+        document.getElementById("orderTable").innerHTML = "<p>尚無訂單。</p>";
+        return;
+      }
 
-  let html = "<table><tr><th>品項</th><th>明細</th><th>單價</th><th>小計</th></tr>";
-  let total = 0;
+      let html = "<table><tr><th>品項</th><th>明細</th><th>單價</th><th>小計</th></tr>";
+      let total = 0;
 
-  for (let item in orders) {
-    const unitPrice = menu[item];
-    const unit = item.includes("(1粒)") ? "顆" : "份";
+      for (let item in orders) {
+        const unitPrice = menu[item];
+        const unit = item.includes("(1粒)") ? "顆" : "份";
 
-    const rows = orders[item].map((qty, idx) => {
-      const subtotal = qty * unitPrice;
-      total += subtotal;
-      return `<div>${qty} ${unit} - $${subtotal.toFixed(1)} <button onclick="deleteItem('${item}', ${idx})">🗑️</button></div>`;
-    }).join("");
+        const rows = orders[item].map((qty, idx) => {
+          const subtotal = qty * unitPrice;
+          total += subtotal;
+          return `<div>${qty} ${unit} - $${subtotal.toFixed(1)} <button onclick="deleteItem('${item}', ${idx})">🗑️</button></div>`;
+        }).join("");
 
-    const itemTotal = orders[item].reduce((sum, q) => sum + q * unitPrice, 0);
-    html += `<tr>
-      <td>${item}</td>
-      <td>${rows}</td>
-      <td>$${unitPrice}</td>
-      <td>$${itemTotal.toFixed(1)}</td>
-    </tr>`;
-  }
+        const itemTotal = orders[item].reduce((sum, q) => sum + q * unitPrice, 0);
+        html += `<tr>
+          <td>${item}</td>
+          <td>${rows}</td>
+          <td>$${unitPrice}</td>
+          <td>$${itemTotal.toFixed(1)}</td>
+        </tr>`;
+      }
 
-  html += `<tr><td colspan="3"><strong>總金額</strong></td><td><strong>$${total.toFixed(1)}</strong></td></tr></table>`;
-  html += `<button onclick="window.print()">列印統計表</button>`;
-  document.getElementById("orderTable").innerHTML = html;
-}
+      html += `<tr><td colspan="3"><strong>總金額</strong></td><td><strong>$${total.toFixed(1)}</strong></td></tr></table>`;
+      html += `<button onclick="window.print()">列印統計表</button>`;
+      document.getElementById("orderTable").innerHTML = html;
+    }
   </script>
 </body>
 </html>
