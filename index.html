@@ -5,36 +5,96 @@
   <title>八方雲集訂單系統</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    body { font-family: "Microsoft JhengHei", sans-serif; margin: 0; padding: 1em; background: #f0f0f0; }
-    .section { background: #fff; padding: 1em; border-radius: 6px; box-shadow: 0 0 8px rgba(0,0,0,0.1); margin-bottom: 20px; max-width: 700px; margin: auto; }
-    h2 { text-align: center; color: #b30000; }
-    label, select, input { font-size: 16px; margin: 0.3em 0; }
-    table { width: 100%; border-collapse: collapse; margin-top: 1em; background: #fff; }
-    th, td { border: 1px solid #ccc; padding: 6px; text-align: center; }
-    th { background: #eee; }
-    .footer { text-align: center; font-size: 18px; margin-top: 40px; line-height: 1.6; display: none; }
-    .action-btn { margin-top: 1em; }
+    body {
+      font-family: "Microsoft JhengHei", sans-serif;
+      margin: 0; padding: 1em; background: #f9f9f9;
+    }
+    .section {
+      background: #fff; padding: 1.5em;
+      border-radius: 10px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+      max-width: 800px;
+      margin: 30px auto;
+    }
+    h2 {
+      text-align: center;
+      color: #b22222;
+      margin-bottom: 1em;
+    }
+    label {
+      display: block;
+      margin: 1em 0 0.5em;
+    }
+    select, input {
+      font-size: 16px;
+      padding: 6px 10px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    button {
+      font-size: 16px;
+      margin-top: 1em;
+      padding: 8px 16px;
+      background-color: #d9534f;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #c9302c;
+    }
+    #orderTable {
+      margin-top: 2em;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: center;
+    }
+    th {
+      background: #f0f0f0;
+    }
+    .footer {
+      text-align: center;
+      font-size: 18px;
+      margin-top: 40px;
+      line-height: 1.6;
+      display: none;
+    }
     @media print {
-      .section input, .section select, .section button, .section label { display: none !important; }
-      .footer { display: block; }
+      body {
+        background: white;
+      }
+      .section *:not(table):not(.footer) {
+        display: none !important;
+      }
+      .footer {
+        display: block;
+        margin-top: 20px;
+      }
     }
   </style>
 </head>
 <body>
   <div class="section">
     <h2>八方雲集點餐系統</h2>
-    <label>選擇品項：
-      <select id="itemSelect">
-        <option value="">請選擇</option>
-      </select>
-    </label>
-    <br>
-    <label>數量（份/顆）：
-      <input type="number" id="itemQty" min="1" value="1" />
-    </label>
-    <br>
+    <label for="itemSelect">選擇品項：</label>
+    <select id="itemSelect">
+      <option value="">請選擇</option>
+    </select>
+
+    <label for="itemQty">數量（份/顆）：</label>
+    <input type="number" id="itemQty" min="1" value="1" />
+
     <button onclick="addItem()">加入訂單</button>
-    <button onclick="clearOrders()" class="action-btn">清除所有訂單</button>
+    <button onclick="clearOrders()">清除所有訂單</button>
+
     <div id="orderTable"></div>
   </div>
 
@@ -50,9 +110,8 @@
       "咖哩雞肉鍋貼(1粒)": 7, "玉米鍋貼(1粒)": 7, "新疏食鍋貼(1粒)": 7.5,
       "招牌水餃(1粒)": 7, "韭菜水餃(1粒)": 7, "韓式辣味水餃(1粒)": 7,
       "咖哩雞肉水餃(1粒)": 7, "玉米水餃(1粒)": 7, "新疏食水餃(1粒)": 7.5,
-      "鮮蝦水餃(1粒)": 10.5,
-      "滷蛋": 15, "香濃豆漿(有糖/無糖)": 20, "黑豆漿": 20,
-      "真傳特調紅茶(470cc)": 20, "黃金泡菜": 30, "酸辣湯": 35,
+      "鮮蝦水餃(1粒)": 10.5, "滷蛋": 15, "香濃豆漿(有糖/無糖)": 20,
+      "黑豆漿": 20, "真傳特調紅茶(470cc)": 20, "黃金泡菜": 30, "酸辣湯": 35,
       "旗魚花枝丸湯": 35, "玉米濃湯": 35, "蘿蔔排骨湯": 35,
       "黃金豆腐": 35, "燙青菜": 35, "燉蘿蔔": 35, "和風秋葵": 35,
       "薄鹽毛豆": 35, "家常小菜": 40, "柚香蘿蔔": 40, "古早味湯麵": 45,
@@ -82,7 +141,7 @@
     function addItem() {
       const item = document.getElementById("itemSelect").value;
       const qty = parseInt(document.getElementById("itemQty").value);
-      if (!item || qty <= 0) return;
+      if (!item || qty <= 0 || isNaN(qty)) return;
 
       if (!orders[item]) orders[item] = [];
       orders[item].push(qty);
@@ -103,6 +162,11 @@
     }
 
     function renderTable() {
+      if (Object.keys(orders).length === 0) {
+        document.getElementById("orderTable").innerHTML = "<p>尚無訂單。</p>";
+        return;
+      }
+
       let html = "<table><tr><th>品項</th><th>明細</th><th>單價</th><th>小計</th></tr>";
       let total = 0;
 
@@ -111,18 +175,18 @@
         const rows = orders[item].map((qty, idx) => {
           const subtotal = qty * unitPrice;
           total += subtotal;
-          return `<div>${qty} 顆 - $${subtotal} <button onclick=\"deleteItem('${item}', ${idx})\">🗑️</button></div>`;
+          return `<div>${qty} 顆 - $${subtotal.toFixed(1)} <button onclick="deleteItem('${item}', ${idx})">🗑️</button></div>`;
         }).join("");
         const itemTotal = orders[item].reduce((sum, q) => sum + q * unitPrice, 0);
         html += `<tr>
           <td>${item}</td>
           <td>${rows}</td>
           <td>$${unitPrice}</td>
-          <td>$${itemTotal}</td>
+          <td>$${itemTotal.toFixed(1)}</td>
         </tr>`;
       }
 
-      html += `<tr><td colspan="3">總金額</td><td>$${total}</td></tr></table>`;
+      html += `<tr><td colspan="3"><strong>總金額</strong></td><td><strong>$${total.toFixed(1)}</strong></td></tr></table>`;
       html += `<button onclick="window.print()">列印統計表</button>`;
       document.getElementById("orderTable").innerHTML = html;
     }
