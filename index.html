@@ -71,21 +71,37 @@
       display: none;
     }
     @media print {
+  body {
+    background: white;
+  }
+
+  /* 隱藏所有元素 */
   body * {
     visibility: hidden;
   }
+
+  /* 顯示統計表與內部元素 */
   #orderTable, #orderTable * {
     visibility: visible;
   }
+
+  /* 顯示 footer 與內部元素 */
+  .footer, .footer * {
+    visibility: visible;
+  }
+
+  /* 移除刪除按鈕 */
   #orderTable button {
     display: none !important;
   }
+
+  /* 排版 footer 在頁面下方 */
   .footer {
-    visibility: visible;
-    position: absolute;
-    bottom: 0;
+    position: fixed;
+    bottom: 40px;
     left: 0;
     width: 100%;
+    text-align: center;
   }
 }
   </style>
