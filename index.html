@@ -68,12 +68,17 @@
       display: none;
     }
     @media print {
-      body {
-        background: white;
-      }
-      .section *:not(table):not(.footer) {
-        display: none !important;
-      }
+  body {
+    background: white;
+  }
+  .section *:not(#orderTable):not(.footer) {
+    display: none !important;
+  }
+  #orderTable,
+  .footer {
+    display: block !important;
+  }
+}
       .footer {
         display: block;
         margin-top: 20px;
